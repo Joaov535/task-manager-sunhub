@@ -60,6 +60,7 @@ class TaskController extends Controller
 
         $task->title = $request->title;
         $task->description = $request->description;
+        $task->updated_at = date('Y-m-d H:i:s');
         $task->status = $request->status;
         $task->save();
 

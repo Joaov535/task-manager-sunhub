@@ -1,67 +1,68 @@
 <template>
-    <div class="login-container">
-      <h2>Login</h2>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 350px">
+      <h2 class="text-center mb-3">Login</h2>
       <form @submit.prevent="login">
-        <div>
-          <label for="email">Email:</label>
-          <input type="email" v-model="email" required />
+        <div class="mb-3">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            v-model="email"
+            required
+          />
         </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" v-model="password" required />
+        <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            v-model="password"
+            required
+          />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
       </form>
-      <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+      <div class="text-center mt-3">
+        <router-link to="/register">Criar conta</router-link>
+      </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        errorMessage: '',
-      };
-    },
-    methods: {
-      async login() {
-        try {
-          // Envia a requisição POST para o endpoint de login da API Laravel
-          const response = await axios.post(apiUrl, {
-            email: this.email,
-            password: this.password,
-          });
-  
-          // Armazena o token de autenticação no localStorage
-          localStorage.setItem('token', response.data.token);
-  
-          // Redireciona ou faz qualquer ação após o login bem-sucedido
-          this.$router.push('/dashboard'); // Exemplo de redirecionamento para a tela de dashboard
-        } catch (error) {
-          this.errorMessage = 'Login falhou. Verifique suas credenciais.';
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await this.$axios.post("/login", {
+          email: this.email,
+          password: this.password,
+        });
+
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
         }
-      },
+
+        this.$router.push("/tasks");
+      } catch (error) {
+         console.error('Erro no login:', error);
+        this.errorMessage = error.response?.data?.message || 'Login falhou. Verifique suas credenciais.';
+      }
     },
-  };
-  </script>
+  },
+};
+</script>
   
-  <style scoped>
-  /* Estilos para a tela de login */
-  .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-  
-  .error {
-    color: red;
-    margin-top: 10px;
-  }
-  </style>
+  <style>
+</style>
   

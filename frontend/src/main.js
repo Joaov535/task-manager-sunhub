@@ -9,17 +9,13 @@ import router from './router';
 import axios from 'axios';
 
 const app = createApp(App);
-const apiUrl =  'http://localhost:8080/api';
+const apiUrl = 'http://localhost:8080/api';
 
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = `${apiUrl}`;
 
-if (!apiUrl) {
-    console.error('A variável de ambiente VUE_APP_API_URL não foi definida!');
-} else {
-    axios.defaults.withCredentials = true;
-    axios.defaults.baseURL = `${apiUrl}`;
-}
 
 app.config.globalProperties.$axios = axios;
 

@@ -111,6 +111,7 @@ export default {
         });
 
         if (error.response?.status === 401) {
+          localStorage.removeItem('token');
           this.$router.push("/");
         }
       }

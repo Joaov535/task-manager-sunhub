@@ -1,15 +1,15 @@
 <template>
   <nav
-    class="navbar justify-content-between pe-5 ps-5 mb-5"
-    style="background-color: #363636"
+    class="navbar justify-content-between pe-5 ps-5 mb-5 bg-dark bg-gradient"
+    
   >
     <a class="navbar-brand" href="">
       <img src="@/assets/logo.svg" alt="Vue" width="35" />
     </a>
 
     <form @submit.prevent="logout">
-      <button class="btn" type="submit">
-        <icon-logout class="text-danger" />
+      <button class="btn" title="Sair" type="submit">
+        <icon-logout />
       </button>
     </form>
   </nav>

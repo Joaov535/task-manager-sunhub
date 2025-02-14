@@ -20,19 +20,9 @@ Este repositório contém o backend e o frontend do teste técnico para a Sunhub
    cd backend/
    ```
    
-   Caso tenha o Composer instalado localmente:
+   Instale os pacotes:
    ```sh
    composer install
-   ```
-   
-   Ou utilize o Composer do próprio container Docker:
-   ```sh
-   docker run --rm \
-       -u "$(id -u):$(id -g)" \
-       -v "$(pwd):/var/www/html" \
-       -w /var/www/html \
-       laravelsail/php84-composer:latest \
-       composer install 
    ```
 
 1. **Renomear o arquivo de configuração:**

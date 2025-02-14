@@ -27,10 +27,7 @@ Este repositório contém o backend e o frontend do teste técnico para a Sunhub
        -v "$(pwd):/var/www/html" \
        -w /var/www/html \
        laravelsail/php84-composer:latest \
-       composer install --ignore-platform-reqs
-   ```
-   ```sh
-   composer install
+       composer install 
    ```
 
 1. **Renomear o arquivo de configuração:**
@@ -38,63 +35,21 @@ Este repositório contém o backend e o frontend do teste técnico para a Sunhub
    mv .env.conf .env
    ```
 
-2. **Criar uma nova chave da aplicação:**
-   ```sh
-   ./vendor/bin/sail artisan key:generate
-   ```
-
-3. **Subir os containers do Docker:**
+2. **Subir os containers do Docker:**
    ```sh
    ./vendor/bin/sail up -d
    ```
 
+
+3. **Criar uma nova chave da aplicação:**
+   ```sh
+   ./vendor/bin/sail artisan key:generate
+   ```
+
+
 4. **Executar as migrações do banco de dados:**
    ```sh
    ./vendor/bin/sail artisan migrate
-   ```
----
-
-
-### Windows
-
-1. **Instalar as dependências do Composer:**
-   
-   Caso tenha o Composer instalado localmente:
-   ```sh
-   composer install
-   ```
-   
-   Ou utilize o Composer do próprio container Docker:
-   ```sh
-   docker run --rm \
-       -u "$(id -u):$(id -g)" \
-       -v "$(pwd):/var/www/html" \
-       -w /var/www/html \
-       laravelsail/php84-composer:latest \
-       composer install --ignore-platform-reqs
-   ```
-   ```powershell
-   composer install
-   ```
-
-1. **Renomear o arquivo de configuração:**
-   ```powershell
-   Rename-Item .env.conf .env
-   ```
-
-2. **Criar uma nova chave da aplicação:**
-   ```powershell
-   vendor\bin\sail artisan key:generate
-   ```
-
-3. **Subir os containers do Docker:**
-   ```powershell
-   vendor\bin\sail up -d
-   ```
-
-4. **Executar as migrações do banco de dados:**
-   ```powershell
-   vendor\bin\sail artisan migrate
    ```
 ---
 

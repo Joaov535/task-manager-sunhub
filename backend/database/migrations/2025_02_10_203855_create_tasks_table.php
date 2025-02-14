@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('title', 255);
             $table->text('description');
-            $table->enum('status', ['pendente', 'em progresso', 'concluída']);
+            $table->enum('status', ['pending', 'underway', 'finish']);
             $table->unsignedBigInteger('user_id');
  
             $table->foreign('user_id')->references('id')->on('users');

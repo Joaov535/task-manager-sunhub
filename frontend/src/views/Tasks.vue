@@ -2,7 +2,14 @@
   <div>
     <Navbar />
     <div class="d-flex justify-content-center align-items-center vh-100">
+      <div v-if="!tasks.length" class="text-center">
+        <p class="text-muted">Nenhuma tarefa encontrada.</p>
+        <br />
+        <p class="text-muted">Clique no icone verde para adicionar tarefas.</p>
+      </div>
+
       <div
+        v-else
         class="card p-4 shadow-lg"
         style="max-width: 900px; margin-top: -10%; width: 90%"
       >

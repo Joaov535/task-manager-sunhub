@@ -23,7 +23,7 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required|string|in:pendente,em progresso,concluída',
+            'status' => 'required|string|in:pending,underway,finish',
         ]);
 
         $user = $request->user();
@@ -37,7 +37,7 @@ class TaskController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'status' => 'required|string|in:pendente,em progresso,concluída',
+            'status' => 'required|string|in:pending,underway,finish',
         ]);
 
         $user = $request->user();

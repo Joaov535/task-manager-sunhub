@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use Illuminate\Http\Request;
 
 
 
@@ -14,6 +15,7 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::middleware('auth:sanctum')->get('/user', function(Request $request){
     return $request->user();
 });
+
 Route::middleware('auth:sanctum')->get('/tasks', [TaskController::class, 'load'])->name('load');
 Route::middleware('auth:sanctum')->post('/tasks', [TaskController::class, 'store'])->name('store');
 Route::middleware('auth:sanctum')->put('/tasks/{id}', [TaskController::class, 'update'])->name('update');

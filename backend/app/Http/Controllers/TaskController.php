@@ -73,10 +73,6 @@ class TaskController extends Controller
 
         try {
             $task = Task::findOrFail($taskID);
-
-            if ($task->user_id != $user->id) {
-                throw new \Exception;
-            }
         } catch (ModelNotFoundException) {
             return response()->json([
                 'error' => 'ID de tarefa não encontrado',

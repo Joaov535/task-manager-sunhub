@@ -39,8 +39,8 @@
     </div>
 
     <!-- Components -->
-    <AddTask @taskAdded="getTasks" />
-    <ModalTask />
+    <AddTask />
+    <ModalTask  @taskAdded="getTasks"/>
   </div>
 </template>
 

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 
 class AuthController extends Controller
 {
@@ -23,10 +24,17 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password,)
             ]);
-        } catch (\Exception $e) {
+        } catch (QueryException $e) {
+             if (str_starts_with($e->getMessage(), 'SQLSTATE[23505]')) {
+                return response()->json([
+                    'error' => 'Erro ao cadastrar usuário',
+                    'message' => 'O e-mail fornecido já está em uso.',
+                ], 400);
+            }
+
             return response()->json([
                 'error' => 'Erro ao registrar usuário',
-                'message' => $e->getMessage(),
+                'message' => 'Tivemos um problema ao cadastrar o usuário. Tente novamente em alguns instantes',
             ], 500);
         }
 
@@ -43,7 +51,10 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Credenciais inválidas'], 403);
+            return response()->json([
+                'error' => 'Credenciais inválidas',
+                 'message' => 'Verifique o email e senha informados.'
+                ], 403);
         }
 
         $token = $user->createToken('API Token')->plainTextToken;

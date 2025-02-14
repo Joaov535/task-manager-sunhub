@@ -25,9 +25,9 @@ Este repositório contém o backend e o frontend do teste técnico para a Sunhub
    composer install
    ```
 
-1. **Renomear o arquivo de configuração:**
+1. **Criar o arquivo de configuração:**
    ```sh
-   mv .env.conf .env
+   cp .env.conf .env
    ```
 
 2. **Subir os containers do Docker:**

@@ -143,9 +143,11 @@ export default {
           this.$emit("taskUpdated");
 
           Swal.fire({
+            position: "top-end",
             title: "Sucesso!",
             icon: "success",
-            draggable: true,
+            showConfirmButton: false,
+            timer: 800,
           });
 
           this.resetForm();

@@ -25,6 +25,8 @@
     </template>
     
     <script>
+    import Swal from 'sweetalert2';
+
     export default {
       data() {
         return {
@@ -47,7 +49,14 @@
     
             this.$router.push('/tasks');
           } catch (error) {
-            this.errorMessage = 'Cadastro de usuário falhou.';
+            const message =
+            error.response?.data?.message || "Erro ao cadastrar usuário.";
+
+            Swal.fire({
+            title: "Oops...",
+            text: message,
+            icon: "warning"
+          });
           }
         },
       },

@@ -33,6 +33,8 @@
 </template>
   
   <script>
+import Swal from 'sweetalert2';
+
 export default {
   data() {
     return {
@@ -55,8 +57,15 @@ export default {
 
         this.$router.push("/tasks");
       } catch (error) {
-         console.error('Erro no login:', error);
-        this.errorMessage = error.response?.data?.message || 'Login falhou. Verifique suas credenciais.';
+
+        const message =
+            error.response?.data?.message || "Falha ao realizar login";
+
+        Swal.fire({
+          title: "Oops...",
+          text: message,
+          icon: "warning"
+        });
       }
     },
   },

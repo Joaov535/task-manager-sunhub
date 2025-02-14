@@ -141,11 +141,11 @@ Isso disponibilizará o site em `http://localhost:3000/`.
 
 ## 📝 Observações
 
+
 - Certifique-se de ter o **Docker** e o **Docker Compose** instalados e de que nenhuma outra aplicação esteja utilizando as portas configuradas no arquivo `.env`.
-- O backend utiliza o **Laravel Sail**, então todos os comandos devem ser executados com `./vendor/bin/sail` no Linux/macOS ou `vendor\bin\sail` no Windows.
-- O frontend utiliza **Vite**, então o projeto será acessível pela URL informada após o comando `npm run dev`.
+
 
 ---
 
-Agora seu projeto está configurado e pronto para ser executado! 🚀
+Agora seu projeto está configurado e pronto para ser executado.
 

@@ -14,6 +14,11 @@ Este repositório contém o backend e o frontend do teste técnico para a Sunhub
 ### Linux/macOS
 
 1. **Instalar as dependências do Composer:**
+
+   Mude para o diretório do backend:
+    ```sh
+   cd backend/
+   ```
    
    Caso tenha o Composer instalado localmente:
    ```sh

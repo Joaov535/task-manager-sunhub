@@ -31,11 +31,20 @@
                   </td>
                   <td>{{ formatDate(task.created_at) }}</td>
                   <td>
-                    <button class="btn btn-warning btn-sm me-2">
-                        <i class="bi bi-pencil-square"></i>
+                    <button
+                      class="btn btn-warning btn-sm me-2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#taskModal"
+                      @click="openEditModal(task)"
+                    >
+                      <i class="bi bi-pencil-square"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm">
-                        <i class="bi bi-x-circle"></i>
+
+                    <button
+                      class="btn btn-danger btn-sm"
+                      @click="deleteTask(task.id)"
+                    >
+                      <i class="bi bi-x-circle"></i>
                     </button>
                   </td>
                 </tr>
@@ -48,7 +57,11 @@
 
     <!-- Components -->
     <AddTask />
-    <ModalTask @taskAdded="getTasks" />
+    <ModalTask
+      ref="taskModal"
+      @taskUpdated="getTasks()"
+      @taskAdded="getTasks"
+    />
   </div>
 </template>
 
@@ -78,25 +91,64 @@ export default {
           },
         });
 
-        if (response.status == 200) {
+        if (response.status === 200) {
           this.tasks = response.data;
         }
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Sessão expirada. Faça login novamente.",
-          });
-
-          this.$router.push("/");
-        }
-
+        const message =
+          error.response?.data?.message || "Erro ao carregar tarefas.";
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: error,
+          text: message,
         });
+
+        if (error.response?.status === 401) {
+          this.$router.push("/");
+        }
+      }
+    },
+
+    async deleteTask(id) {
+      const confirm = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Esta ação não pode ser desfeita!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sim, excluir!",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (confirm.isConfirmed) {
+        try {
+          const response = await this.$axios.delete(`/tasks/${id}`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          if (response.status === 200) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Tarefa deletada",
+              showConfirmButton: false,
+              timer: 800,
+            });
+
+            this.getTasks();
+          }
+        } catch (error) {
+          Swal.fire("Erro!", "Não foi possível excluir a tarefa.", "error");
+        }
+      }
+    },
+
+    openEditModal(task) {
+      if (this.$refs.taskModal) {
+        this.$refs.taskModal.editTask(task);
       }
     },
 
@@ -105,6 +157,7 @@ export default {
       const date = new Date(dateString);
       return date.toLocaleDateString("pt-BR");
     },
+
     formatStatus(status) {
       const statusMap = {
         pending: "Pendente",
@@ -114,6 +167,7 @@ export default {
 
       return statusMap[status];
     },
+
     getStatusClass(status) {
       return {
         "bg-success bg-gradient bg-opacity-75": status === "finish", // Verde para finalizado

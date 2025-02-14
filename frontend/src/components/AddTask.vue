@@ -2,7 +2,7 @@
   <button
     class="btn btn-success floating-button fw-bold"
     data-bs-toggle="modal"
-    data-bs-target="#addTaskModal"
+    data-bs-target="#taskModal"
     @click="handleClick"
   >
     <IconPlus />

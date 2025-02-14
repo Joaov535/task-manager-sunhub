@@ -1,9 +1,9 @@
 <template>
   <div
     class="modal fade"
-    id="addTaskModal"
+    id="taskModal"
     tabindex="-1"
-    aria-labelledby="addTaskModal"
+    aria-labelledby="taskModal"
     aria-hidden="true"
   >
     <div class="modal-dialog">
@@ -68,7 +68,7 @@
           </div>
           <br />
           <button class="btn btn-primary" type="submit" style="width: 100%">
-            Criar
+            Salvar
           </button>
 
           <div
@@ -80,6 +80,7 @@
               data-bs-dismiss="modal"
               aria-label="Close"
               style="cursor: pointer"
+              @click="resetForm()"
               >Fechar</a
             >
           </div>
@@ -98,54 +99,74 @@ export default {
       title: "",
       description: "",
       status: "pending",
+      editingTaskId: null,
     };
   },
+
   methods: {
     async sendTask() {
-
       try {
-        const response = await this.$axios.post(
-          "/tasks",
-          {
-            title: this.title,
-            status: this.status,
-            description: this.description,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        let response;
 
-        if (response.status == 201) {
-          this.$emit("taskAdded");
-          
+        if (this.editingTaskId) {
+          response = await this.$axios.put(
+            `/tasks/${this.editingTaskId}`,
+            {
+              title: this.title,
+              description: this.description,
+              status: this.status,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        } else {
+
+          response = await this.$axios.post(
+            "/tasks",
+            {
+              title: this.title,
+              description: this.description,
+              status: this.status,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        }
+
+        if (response.status === 200 || response.status === 201) {
+          this.$emit("taskUpdated");
+
           Swal.fire({
             title: "Sucesso!",
             icon: "success",
             draggable: true,
           });
+
+          this.resetForm();
         }
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Sessão expirada. Faça login novamente.",
-          });
-
-          this.$router.push("/");
-        }
-
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: error,
-        });
-
-        this.$router.push("/");
+        Swal.fire("Erro!", "Não foi possível salvar a tarefa.", "error");
       }
+    },
+
+    editTask(task) {
+      this.editingTaskId = task.id;
+      this.title = task.title;
+      this.description = task.description;
+      this.status = task.status;
+    },
+
+    resetForm() {
+      this.title = "";
+      this.description = "";
+      this.status = "pending";
+      this.editingTaskId = null;
     },
   },
 };

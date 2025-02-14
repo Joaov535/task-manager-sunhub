@@ -120,6 +120,7 @@ export default {
 
         if (response.status == 201) {
           this.$emit("taskAdded");
+          
           Swal.fire({
             title: "Sucesso!",
             icon: "success",

@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar justify-content-between pe-5 ps-5"
+    class="navbar justify-content-between pe-5 ps-5 mb-5"
     style="background-color: #363636"
   >
     <a class="navbar-brand" href="">

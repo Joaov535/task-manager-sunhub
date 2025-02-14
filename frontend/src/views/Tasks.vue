@@ -6,30 +6,38 @@
         class="card p-4 shadow-lg"
         style="max-width: 900px; margin-top: -10%; width: 90%"
       >
-
         <div class="container mt-4">
           <h2 class="mb-3">Lista de Tarefas</h2>
 
           <div class="table-responsive">
             <table class="table">
-              <thead class="">
+              <thead class="text-center">
                 <tr>
                   <th hidden>ID</th>
                   <th>Título</th>
                   <th>Descrição</th>
                   <th>Status</th>
                   <th>Data</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="text-center">
                 <tr v-for="task in tasks" :key="task.id">
                   <td hidden>{{ task.id }}</td>
                   <td>{{ task.title }}</td>
                   <td>{{ task.description }}</td>
-                  <td>
-                    <span>{{ task.status }}</span>
+                  <td :class="getStatusClass(task.status)">
+                    <span>{{ formatStatus(task.status) }}</span>
                   </td>
                   <td>{{ formatDate(task.created_at) }}</td>
+                  <td>
+                    <button class="btn btn-warning btn-sm me-2">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -40,12 +48,11 @@
 
     <!-- Components -->
     <AddTask />
-    <ModalTask  @taskAdded="getTasks"/>
+    <ModalTask @taskAdded="getTasks" />
   </div>
 </template>
 
 <script>
-
 import Swal from "sweetalert2";
 import Navbar from "@/components/Navbar.vue";
 import AddTask from "@/components/AddTask.vue";
@@ -55,7 +62,7 @@ export default {
   components: {
     Navbar,
     AddTask,
-    ModalTask
+    ModalTask,
   },
   data() {
     return {
@@ -97,6 +104,22 @@ export default {
       if (!dateString) return "Data inválida";
       const date = new Date(dateString);
       return date.toLocaleDateString("pt-BR");
+    },
+    formatStatus(status) {
+      const statusMap = {
+        pending: "Pendente",
+        underway: "Em Progresso",
+        finish: "Concluída",
+      };
+
+      return statusMap[status];
+    },
+    getStatusClass(status) {
+      return {
+        "bg-success bg-gradient bg-opacity-75": status === "finish", // Verde para finalizado
+        "bg-warning bg-gradient bg-opacity-75": status === "pending", // Amarelo para pendente
+        "bg-primary bg-gradient bg-opacity-75": status === "underway", // Azul para em progresso
+      };
     },
   },
   mounted() {

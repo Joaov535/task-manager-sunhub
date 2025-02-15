@@ -60,10 +60,32 @@ Este repositório contém o backend e o frontend do teste técnico para a Sunhub
    npm install
    ```
 
-3. **Rodar o projeto:**
+3. **Rodar o projeto em desenvolvimento:**
    ```sh
    npm run dev
    ```
+
+---
+
+### 🚀 Ambiente de Produção
+
+1. **Gerar a build para produção:**
+   ```sh
+   npm run build
+   ```
+
+2. **Instalar um servidor estático para servir a aplicação:**
+   ```sh
+   npm install -g serve
+   ```
+
+3. **Rodar a aplicação em produção:**
+   ```sh
+   serve -s dist -l 3000
+   ```
+
+Isso disponibilizará o site em `http://localhost:3000/`.
+
 
 ---
 

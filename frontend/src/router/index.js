@@ -33,7 +33,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
 
-  if ((to.name === 'login' || to.name === 'register' || to.name === 'home') && token) {
+  if ((to.name === 'login' || to.name === 'register' || to.name === 'home') && token != null) {
     
     next({ name: 'tasks' });
   } else {
@@ -41,4 +41,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export default router
+export default router;

@@ -13,7 +13,7 @@
         class="card p-4 shadow-lg"
         style="max-width: 900px; margin-top: -10%; width: 90%; max-height: 70vh;"
       >
-        <div class="container mt-4">
+        <div class="container mt-4 overflow-y-auto">
           <h2 class="mb-3">Lista de Tarefas</h2>
 
           <div class="table-responsive">

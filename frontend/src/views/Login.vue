@@ -55,6 +55,10 @@ export default {
           localStorage.setItem("token", response.data.token);
         }
 
+        if (response.data.userName) {
+          localStorage.setItem("userName", response.data.userName);
+        }
+
         this.$router.push("/tasks");
       } catch (error) {
 

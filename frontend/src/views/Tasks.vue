@@ -111,7 +111,7 @@ export default {
         });
 
         if (error.response?.status === 401) {
-          localStorage.removeItem('token');
+          localStorage.removeItem("token");
           this.$router.push("/");
         }
       }
@@ -191,4 +191,10 @@ export default {
 </script>
 
 <style>
+  td {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>

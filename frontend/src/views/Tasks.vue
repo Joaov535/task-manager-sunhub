@@ -11,7 +11,7 @@
       <div
         v-else
         class="card p-4 shadow-lg"
-        style="max-width: 900px; margin-top: -10%; width: 90%"
+        style="max-width: 900px; margin-top: -10%; width: 90%; max-height: 70vh;"
       >
         <div class="container mt-4">
           <h2 class="mb-3">Lista de Tarefas</h2>
